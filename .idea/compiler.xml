@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="peanut-common" />
+        <module name="peanut-gateway" />
+        <module name="peanut-item-interface" />
+        <module name="peanut-item-service" />
+        <module name="peanut-registry" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="peanut.item.interface" target="1.8" />
+      <module name="peanut.item.service" target="1.8" />
+      <module name="peanut.item.test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
