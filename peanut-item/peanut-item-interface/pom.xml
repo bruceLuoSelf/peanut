@@ -12,5 +12,11 @@
     <groupId>com.peanut.service</groupId>
     <artifactId>peanut-item-interface</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper</artifactId>
+            <version>3.3.6</version>
+        </dependency>
+    </dependencies>
 </project>

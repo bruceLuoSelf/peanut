@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.peanut.item.dao.mapper.CategoryMapper">
-  <resultMap id="BaseResultMap" type="com.peanut.item.dao.entity.Category">
+  <resultMap id="BaseResultMap" type="com.peanut.item.entity.Category">
     <!--
       WARNING - @mbggenerated
     -->
