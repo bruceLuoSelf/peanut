@@ -20,8 +20,7 @@ public class SwaggerConf {
                 .apiInfo(apiInfo())
                 .select()
                 // 自行修改为自己的包路径
-                .apis(RequestHandlerSelectors.basePackage("com.peanut.item.config"))
-                .apis(RequestHandlerSelectors.basePackage("com.peanut.item.config"))
+                .apis(RequestHandlerSelectors.basePackage("com.peanut.item"))
                 .paths(PathSelectors.any())
                 .build();
     }
