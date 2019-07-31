@@ -4,7 +4,9 @@ public enum ExceptionEnum {
 
     PRICE_CANNOT_BE_NULL(400, "商品价格不能为空"),
 
-    CATEGORY_NOT_FOUND(404, "未找到商品分类");
+    CATEGORY_NOT_FOUND(404, "未找到商品分类"),
+
+    BRAND_NOT_FOUND(404, "未找到商品品类")
     ;
     private int code;
 
