@@ -34,7 +34,7 @@ public class BrandService implements IBrandService {
             example.setOrderByClause(sortBy + (desc ? " DESC" : " ASC"));
         }
         if (StringUtils.isNotBlank(key)) {
-            criteria.andLike("name", key);
+            criteria.andLike("name", "%" + key + "%");
         }
 //        RowBounds rounds = new RowBounds(page * rows, rows);
 //        brandMapper.selectByExampleAndRowBounds(example, rounds);

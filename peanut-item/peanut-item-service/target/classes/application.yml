@@ -17,3 +17,9 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 127.0.0.1
+
+#logging.level.com.peanut.item.dao.mapper : DEBUG
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
