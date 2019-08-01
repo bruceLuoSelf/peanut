@@ -29,8 +29,7 @@ public class BrandController {
             @RequestParam(value="rows", defaultValue = "5") Integer rows,
             @RequestParam(value="sortBy", required = false) String sortBy,
             @RequestParam(value="desc", defaultValue = "false") Boolean desc,
-            @RequestParam(value="key", required = false) String key
-    ) {
+            @RequestParam(value="key", required = false) String key) {
         PageResult<Brand> result = brandService.queryBrandByPage(page, rows, sortBy, desc, key);
         return ResponseEntity.ok(result);
     }

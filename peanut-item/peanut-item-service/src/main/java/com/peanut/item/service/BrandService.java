@@ -36,8 +36,6 @@ public class BrandService implements IBrandService {
         if (StringUtils.isNotBlank(key)) {
             criteria.andLike("name", "%" + key + "%");
         }
-//        RowBounds rounds = new RowBounds(page * rows, rows);
-//        brandMapper.selectByExampleAndRowBounds(example, rounds);
         List<Brand> brandList = brandMapper.selectByExample(example);
         if (CollectionUtils.isEmpty(brandList)) {
             throw new PeanutException(ExceptionEnum.BRAND_NOT_FOUND);
@@ -45,8 +43,8 @@ public class BrandService implements IBrandService {
         PageResult<Brand> result = new PageResult<Brand>();
         PageInfo<Brand> pageInfo = new PageInfo<Brand>(brandList);
         result.setItems(brandList);
-        result.setTotlePage(pageInfo.getTotal());
-        result.setPage(page);
+        result.setTotlePage(pageInfo.getPages());
+        result.setPage(pageInfo.getTotal());
         return result;
     }
 }

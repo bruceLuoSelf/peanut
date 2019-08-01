@@ -8,25 +8,25 @@ import java.util.List;
  */
 public class PageResult<T> {
 
-    private Integer page;
+    private Long page;
 
-    private Long totlePage;
+    private Integer totlePage;
 
     private List<T> items;
 
-    public Integer getPage() {
+    public Long getPage() {
         return page;
     }
 
-    public void setPage(Integer page) {
+    public void setPage(Long page) {
         this.page = page;
     }
 
-    public Long getTotlePage() {
+    public Integer getTotlePage() {
         return totlePage;
     }
 
-    public void setTotlePage(Long totlePage) {
+    public void setTotlePage(Integer totlePage) {
         this.totlePage = totlePage;
     }
 
