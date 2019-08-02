@@ -12,6 +12,7 @@
         <module>peanut-gateway</module>
         <module>peanut-item</module>
         <module>peanut-common</module>
+        <module>peanut-upload</module>
     </modules>
     <packaging>pom</packaging>
 

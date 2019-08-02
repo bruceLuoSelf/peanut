@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.peanut.common</groupId>
-    <artifactId>peanut.registry</artifactId>
+    <artifactId>peanut-registry</artifactId>
 
     <dependencies>
         <dependency>
