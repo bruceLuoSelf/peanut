@@ -7,10 +7,11 @@ import com.peanut.exception.PeanutException;
 import com.peanut.item.dao.mapper.BrandMapper;
 import com.peanut.item.entity.Brand;
 import com.peanut.vo.PageResult;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
+import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
@@ -46,5 +47,26 @@ public class BrandService implements IBrandService {
         result.setTotlePage(pageInfo.getPages());
         result.setPage(pageInfo.getTotal());
         return result;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void addBrand(Brand brand, List<Long> cids) {
+        if (brand == null || StringUtils.isBlank(brand.getName()) || StringUtils.isBlank(brand.getLetter()) ||
+                CollectionUtils.isEmpty(cids)) {
+            throw new PeanutException(ExceptionEnum.PARAM_ERROR);
+        }
+        Example example = new Example(Brand.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("name", brand.getName());
+        criteria.andEqualTo("letter", brand.getLetter());
+        List<Brand> brandList = brandMapper.selectByExample(example);
+        if (CollectionUtils.isNotEmpty(brandList)) {
+            throw new PeanutException(ExceptionEnum.ALREADY_EXIST_DATA);
+        }
+        brandMapper.insert(brand);
+        for (Long cid : cids) {
+            brandMapper.addCategoryBrand(cid, brand.getId());
+        }
     }
 }

@@ -3,7 +3,6 @@ package com.peanut.advice;
 import com.peanut.enums.ExceptionEnum;
 import com.peanut.exception.PeanutException;
 import com.peanut.vo.ExceptionResult;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

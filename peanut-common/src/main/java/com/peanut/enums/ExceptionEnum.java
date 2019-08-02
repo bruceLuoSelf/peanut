@@ -6,7 +6,11 @@ public enum ExceptionEnum {
 
     CATEGORY_NOT_FOUND(404, "未找到商品分类"),
 
-    BRAND_NOT_FOUND(404, "未找到商品品类")
+    BRAND_NOT_FOUND(404, "未找到商品品类"),
+
+    PARAM_ERROR(404, "参数错误"),
+
+    ALREADY_EXIST_DATA(404, "已存在相同的数据")
     ;
     private int code;
 

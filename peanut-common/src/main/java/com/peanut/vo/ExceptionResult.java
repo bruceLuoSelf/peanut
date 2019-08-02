@@ -2,8 +2,6 @@ package com.peanut.vo;
 
 import com.peanut.enums.ExceptionEnum;
 
-import java.util.Date;
-
 /**
  * 异常结果
  */
@@ -22,5 +20,29 @@ public class ExceptionResult {
     }
 
     public ExceptionResult() {
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
     }
 }
