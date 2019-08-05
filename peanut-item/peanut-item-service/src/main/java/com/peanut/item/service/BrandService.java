@@ -2,6 +2,7 @@ package com.peanut.item.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.peanut.common.utils.BeanMapper;
 import com.peanut.enums.ExceptionEnum;
 import com.peanut.exception.PeanutException;
 import com.peanut.item.dao.mapper.BrandMapper;
@@ -12,7 +13,6 @@ import com.peanut.item.entity.Category;
 import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -91,6 +91,7 @@ public class BrandService implements IBrandService {
 
     /**
      * 修改品牌分类
+     *
      * @param brandVo
      */
     @Override
@@ -99,8 +100,7 @@ public class BrandService implements IBrandService {
         if (brandVo == null) {
             throw new PeanutException(ExceptionEnum.PARAM_ERROR);
         }
-        Brand brand = new Brand();
-        BeanUtils.copyProperties(brandVo, brand);
+        Brand brand = BeanMapper.map(brandVo, Brand.class);
         brandMapper.updateByPrimaryKey(brand);
         List<BrandCategory> brandCategoryList = brandMapper.getBrandCategoryByBrandId(brandVo.getId());
         if (CollectionUtils.isNotEmpty(brandCategoryList)) {
