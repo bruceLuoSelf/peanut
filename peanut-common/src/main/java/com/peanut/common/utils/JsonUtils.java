@@ -83,45 +83,5 @@ public class JsonUtils {
         }
     }
 
-
-
-    public static void main(String[] args) {
-        //language=JSON
-        String json = "{\"name\":\"jack\",\"age\":29,\"sex\":\"male\"}";
-        Map<String, String> map = parseMap(json, String.class, String.class);
-        System.out.println("map = " + map);
-
-        
-    }
-
 }
 
-class User{
-    String name;
-    int age;
-    String sex;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-}
