@@ -6,14 +6,19 @@ import com.peanut.enums.ExceptionEnum;
 import com.peanut.exception.PeanutException;
 import com.peanut.item.dao.mapper.BrandMapper;
 import com.peanut.item.entity.Brand;
+import com.peanut.item.entity.BrandCategory;
+import com.peanut.item.entity.BrandVo;
+import com.peanut.item.entity.Category;
 import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -65,8 +70,60 @@ public class BrandService implements IBrandService {
             throw new PeanutException(ExceptionEnum.ALREADY_EXIST_DATA);
         }
         brandMapper.insert(brand);
+        this.insertBrandCategory(brand.getId(), cids);
+    }
+
+    private void insertBrandCategory(Long bid, List<Long> cids) {
         for (Long cid : cids) {
-            brandMapper.addCategoryBrand(cid, brand.getId());
+            brandMapper.addCategoryBrand(cid, bid);
+        }
+    }
+
+    @Override
+    public Brand selectBrand(Long bid) {
+        return brandMapper.selectByPrimaryKey(bid);
+    }
+
+    @Override
+    public List<Category> queryCategoryByBid(Long id) {
+        return brandMapper.queryCategoryByBid(id);
+    }
+
+    /**
+     * 修改品牌分类
+     * @param brandVo
+     */
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateBrand(BrandVo brandVo) {
+        if (brandVo == null) {
+            throw new PeanutException(ExceptionEnum.PARAM_ERROR);
+        }
+        Brand brand = new Brand();
+        BeanUtils.copyProperties(brandVo, brand);
+        brandMapper.updateByPrimaryKey(brand);
+        List<BrandCategory> brandCategoryList = brandMapper.getBrandCategoryByBrandId(brandVo.getId());
+        if (CollectionUtils.isNotEmpty(brandCategoryList)) {
+            Iterator<BrandCategory> it = brandCategoryList.iterator();
+            while (it.hasNext()) {
+                BrandCategory category = it.next();
+                if (brandVo.getCids().contains(category.getCategoryId())) {
+                    //删除新数据中与就数据重复的,剩下的是要插入的
+                    brandVo.getCids().remove(category.getCategoryId());
+                    //删除重复数据，剩下的是要删除的
+                    it.remove();
+                }
+            }
+        }
+        //删除页面删除的品牌分类
+        if (CollectionUtils.isNotEmpty(brandCategoryList)) {
+            for (BrandCategory category : brandCategoryList) {
+                brandMapper.deleteBrandCategoryByBrandCategoryId(brandVo.getId(), category.getCategoryId());
+            }
+        }
+        //插入新增的品牌分类
+        if (CollectionUtils.isNotEmpty(brandVo.getCids())) {
+            this.insertBrandCategory(brandVo.getId(), brandVo.getCids());
         }
     }
 }

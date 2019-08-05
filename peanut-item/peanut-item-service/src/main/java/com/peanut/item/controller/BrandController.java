@@ -1,6 +1,7 @@
 package com.peanut.item.controller;
 
 import com.peanut.item.entity.Brand;
+import com.peanut.item.entity.BrandVo;
 import com.peanut.item.service.IBrandService;
 import com.peanut.vo.PageResult;
 import io.swagger.annotations.ApiOperation;
@@ -36,9 +37,18 @@ public class BrandController {
 
     @PostMapping
     @ApiOperation(value="增加品牌")
-    public ResponseEntity<PageResult<Brand>> addBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
+    public ResponseEntity addBrand(Brand brand, @RequestParam("cids")List<Long> cids) {
         brandService.addBrand(brand, cids);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @PutMapping
+    @ApiOperation(value = "修改品牌")
+    public ResponseEntity updateBrand(BrandVo brandVo) {
+        brandService.updateBrand(brandVo);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
 
 }

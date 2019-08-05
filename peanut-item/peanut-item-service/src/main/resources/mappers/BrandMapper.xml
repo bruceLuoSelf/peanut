@@ -10,4 +10,13 @@
     <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="letter" property="letter" jdbcType="CHAR" />
   </resultMap>
+
+  <resultMap id="brandCategoryMap" type="com.peanut.item.entity.BrandCategory">
+    <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+    <result column="category_id" property="categoryId" jdbcType="BIGINT"/>
+  </resultMap>
+
+  <select id="getBrandCategoryByBrandId" parameterType="long" resultMap="brandCategoryMap">
+    SELECT * FROM tb_category_brand WHERE brand_id = #{bid}
+  </select>
 </mapper>

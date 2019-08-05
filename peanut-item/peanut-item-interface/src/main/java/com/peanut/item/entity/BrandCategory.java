@@ -5,7 +5,7 @@ package com.peanut.item.entity;
  * @date 2019/8/2.
  * 分类品牌
  */
-public class CategoryBrand {
+public class BrandCategory {
 
     private Long brandId;
 

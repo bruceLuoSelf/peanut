@@ -1,6 +1,10 @@
 package com.peanut.item.entity;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.List;
 
 @Table(name = "tb_brand")
 public class Brand {
@@ -25,6 +29,16 @@ public class Brand {
      * 品牌的首字母
      */
     private String letter;
+
+    private List<BrandCategory> categories;
+
+    public List<BrandCategory> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<BrandCategory> categories) {
+        this.categories = categories;
+    }
 
     /**
      * 获取品牌id
