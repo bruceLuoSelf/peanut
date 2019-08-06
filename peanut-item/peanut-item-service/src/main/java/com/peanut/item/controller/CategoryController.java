@@ -5,6 +5,7 @@ import com.peanut.item.service.IBrandService;
 import com.peanut.item.service.ICategoryService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,13 @@ public class CategoryController {
     public ResponseEntity<List<Category>> queryCategoryByBid(@PathVariable("id")Long id) {
         List<Category> categories = brandService.queryCategoryByBid(id);
         return ResponseEntity.ok(categories);
+    }
+
+    @ApiOperation(value = "删除品牌")
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteBrand(@PathVariable("id")Long id) {
+        brandService.deleteBrand(id);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 }

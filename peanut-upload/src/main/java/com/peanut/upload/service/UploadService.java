@@ -1,11 +1,9 @@
 package com.peanut.upload.service;
 
-import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.peanut.enums.ExceptionEnum;
 import com.peanut.exception.PeanutException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,8 +27,8 @@ public class UploadService implements IUploadService {
 
     private static final List<String> ALLOW_TYPES = new ArrayList<String>(Arrays.asList("image/jpeg", "image/png", "image/bmp"));
 
-    @Autowired
-    private FastFileStorageClient fastFileStorageClient;
+//    @Autowired
+//    private FastFileStorageClient fastFileStorageClient;
 
     @Override
     public String upload(MultipartFile file) {

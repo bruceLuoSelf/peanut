@@ -89,6 +89,11 @@ public class BrandService implements IBrandService {
         return brandMapper.queryCategoryByBid(id);
     }
 
+    @Override
+    public void deleteBrand(Long id) {
+        brandMapper.deleteByPrimaryKey(id);
+    }
+
     /**
      * 修改品牌分类
      *

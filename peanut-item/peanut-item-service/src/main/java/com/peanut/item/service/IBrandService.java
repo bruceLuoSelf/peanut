@@ -22,4 +22,6 @@ public interface IBrandService {
     Brand selectBrand(Long bid);
 
     List<Category> queryCategoryByBid(Long id);
+
+    void deleteBrand(Long id);
 }

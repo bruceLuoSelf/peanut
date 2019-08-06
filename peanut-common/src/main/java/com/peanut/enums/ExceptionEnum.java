@@ -14,7 +14,9 @@ public enum ExceptionEnum {
 
     UPLOAD_FILE_FAIL(404, "上传文件失败"),
 
-    INVALID_FILE_TYPE(500, "无效的文件类型")
+    INVALID_FILE_TYPE(500, "无效的文件类型"),
+
+    SPEC_GROUP_NOT_FOUND(404, "未找到分组"),
     ;
     private int code;
 

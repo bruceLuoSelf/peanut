@@ -4,7 +4,7 @@ spring:
   application:
     name: item-service
   datasource:
-    url: jdbc:mysql://120.78.170.24:3306/peanut
+    url: jdbc:mysql://120.78.170.24:3306/peanut?useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
     driver-class-name : com.mysql.jdbc.Driver
