@@ -57,10 +57,10 @@ public class SpecGroupService implements ISpecGroupService {
 
     @Override
     public List<SpecParam> queryGroupParams(Long gid) {
-        Example example = new Example(SpecParam.class);
-        Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("gid", gid);
-        List<SpecParam> list = specParamMapper.selectByExample(example);
+        List<SpecParam> list = specParamMapper.querySpecParamByGroupId(gid);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new PeanutException(ExceptionEnum.SPEC_PARAM_NOT_FOUND);
+        }
         return list;
     }
 }

@@ -17,6 +17,10 @@ public enum ExceptionEnum {
     INVALID_FILE_TYPE(500, "无效的文件类型"),
 
     SPEC_GROUP_NOT_FOUND(404, "未找到分组"),
+
+    SPEC_PARAM_NOT_FOUND(404, "未找到商品规格参数"),
+
+    GOODS_NOT_FOUND(404, "未找到商品"),
     ;
     private int code;
 

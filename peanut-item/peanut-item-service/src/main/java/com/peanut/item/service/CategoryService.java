@@ -33,4 +33,11 @@ public class CategoryService implements ICategoryService {
         }
         return categoryList;
     }
+
+    @Override
+    public List<Category> queryCategoryListByIds(List<Long> ids) {
+        return categoryMapper.selectByIdList(ids);
+    }
+
+
 }

@@ -50,8 +50,8 @@ public class SpecGroupController {
     }
 
     @ApiOperation(value = "查询分组参数")
-    @PutMapping("params")
-    public ResponseEntity<List<SpecParam>> queryGroupParams(@PathVariable("gid")Long gid) {
+    @GetMapping("params")
+    public ResponseEntity<List<SpecParam>> queryGroupParams(@RequestParam("gid")Long gid) {
         List<SpecParam> list = specGroupService.queryGroupParams(gid);
         return ResponseEntity.ok(list);
     }

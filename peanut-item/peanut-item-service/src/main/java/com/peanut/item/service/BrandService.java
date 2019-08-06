@@ -131,4 +131,9 @@ public class BrandService implements IBrandService {
             this.insertBrandCategory(brandVo.getId(), brandVo.getCids());
         }
     }
+
+    @Override
+    public Brand queryBrandNameById(Long id) {
+        return brandMapper.selectByPrimaryKey(id);
+    }
 }

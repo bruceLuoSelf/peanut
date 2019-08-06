@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peanut.item.dao.mapper.SpuDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.peanut.item.entity.SpuDetail" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="spu_id" property="spuId" jdbcType="BIGINT" />
+    <result column="generic_spec" property="genericSpec" jdbcType="VARCHAR" />
+    <result column="special_spec" property="specialSpec" jdbcType="VARCHAR" />
+    <result column="packing_list" property="packingList" jdbcType="VARCHAR" />
+    <result column="after_service" property="afterService" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+</mapper>
