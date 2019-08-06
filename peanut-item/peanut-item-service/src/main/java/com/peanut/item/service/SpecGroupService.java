@@ -3,7 +3,9 @@ package com.peanut.item.service;
 import com.peanut.enums.ExceptionEnum;
 import com.peanut.exception.PeanutException;
 import com.peanut.item.dao.mapper.SpecGroupMapper;
+import com.peanut.item.dao.mapper.SpecParamMapper;
 import com.peanut.item.entity.SpecGroup;
+import com.peanut.item.entity.SpecParam;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class SpecGroupService implements ISpecGroupService {
 
     @Autowired
     SpecGroupMapper specGroupMapper;
+
+    @Autowired
+    private SpecParamMapper specParamMapper;
 
     @Override
     public List<SpecGroup> queryGroupByCid(Long cid) {
@@ -48,5 +53,14 @@ public class SpecGroupService implements ISpecGroupService {
     @Override
     public void updateSpecGroup(SpecGroup specGroup) {
         specGroupMapper.updateByPrimaryKey(specGroup);
+    }
+
+    @Override
+    public List<SpecParam> queryGroupParams(Long gid) {
+        Example example = new Example(SpecParam.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andEqualTo("gid", gid);
+        List<SpecParam> list = specParamMapper.selectByExample(example);
+        return list;
     }
 }

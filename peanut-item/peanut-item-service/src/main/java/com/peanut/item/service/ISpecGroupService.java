@@ -1,6 +1,7 @@
 package com.peanut.item.service;
 
 import com.peanut.item.entity.SpecGroup;
+import com.peanut.item.entity.SpecParam;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ISpecGroupService {
     void deleteSpecGroup(Long id);
 
     void updateSpecGroup(SpecGroup specGroup);
+
+    List<SpecParam> queryGroupParams(Long gid);
 }

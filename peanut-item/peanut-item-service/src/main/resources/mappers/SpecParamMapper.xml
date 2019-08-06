@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.peanut.item.dao.mapper.SpecParamMapper" >
+  <resultMap id="BaseResultMap" type="com.peanut.item.entity.SpecParam" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="group_id" property="groupId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="numeric" property="numeric" jdbcType="BIT" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+    <result column="generic" property="generic" jdbcType="BIT" />
+    <result column="searching" property="searching" jdbcType="BIT" />
+    <result column="segments" property="segments" jdbcType="VARCHAR" />
+  </resultMap>
+</mapper>

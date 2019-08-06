@@ -1,6 +1,7 @@
 package com.peanut.item.controller;
 
 import com.peanut.item.entity.SpecGroup;
+import com.peanut.item.entity.SpecParam;
 import com.peanut.item.service.ISpecGroupService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +48,12 @@ public class SpecGroupController {
         specGroupService.updateSpecGroup(specGroup);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @ApiOperation(value = "查询分组参数")
+    @PutMapping("params")
+    public ResponseEntity<List<SpecParam>> queryGroupParams(@PathVariable("gid")Long gid) {
+        List<SpecParam> list = specGroupService.queryGroupParams(gid);
+        return ResponseEntity.ok(list);
+    }
+
 }
