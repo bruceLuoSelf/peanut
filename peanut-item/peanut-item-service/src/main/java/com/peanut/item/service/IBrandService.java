@@ -19,11 +19,11 @@ public interface IBrandService {
 
     void updateBrand(BrandVo brandVo);
 
-    Brand selectBrand(Long bid);
-
     List<Category> queryCategoryByBid(Long id);
 
     void deleteBrand(Long id);
 
-    Brand queryBrandNameById(Long id);
+    Brand queryBrandById(Long id);
+
+    List<Brand> queryBrandByCategoryId(Long cid);
 }

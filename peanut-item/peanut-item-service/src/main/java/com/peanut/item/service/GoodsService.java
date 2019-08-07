@@ -64,7 +64,7 @@ public class GoodsService implements IGoodsService {
             List<String> names = categoryService.queryCategoryListByIds(Arrays.asList(spu.getCid1(), spu.getCid2(), spu.getCid3()))
                     .stream().map(Category::getName).collect(Collectors.toList());
             spu.setCategoryName(StringUtils.join(names, "/"));
-            spu.setBrandName(brandService.queryBrandNameById(spu.getBrandId()).getName());
+            spu.setBrandName(brandService.queryBrandById(spu.getBrandId()).getName());
         }
 
     }

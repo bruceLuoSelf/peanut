@@ -49,6 +49,12 @@ public class BrandController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
+    @GetMapping("cid/{cid}")
+    @ApiOperation(value = "根据id查询品牌")
+    public ResponseEntity<List<Brand>> queryBrandByCategoryId(@PathVariable("cid")Long cid) {
+        return ResponseEntity.ok(brandService.queryBrandByCategoryId(cid));
+    }
+
 
 
 }

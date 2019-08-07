@@ -80,11 +80,6 @@ public class BrandService implements IBrandService {
     }
 
     @Override
-    public Brand selectBrand(Long bid) {
-        return brandMapper.selectByPrimaryKey(bid);
-    }
-
-    @Override
     public List<Category> queryCategoryByBid(Long id) {
         return brandMapper.queryCategoryByBid(id);
     }
@@ -133,7 +128,17 @@ public class BrandService implements IBrandService {
     }
 
     @Override
-    public Brand queryBrandNameById(Long id) {
+    public Brand queryBrandById(Long id) {
         return brandMapper.selectByPrimaryKey(id);
     }
+
+    @Override
+    public List<Brand> queryBrandByCategoryId(Long cid) {
+        List<Brand> brands = brandMapper.queryBrandByCategoryId(cid);
+        if (CollectionUtils.isEmpty(brands)) {
+            throw new PeanutException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brands;
+    }
+
 }

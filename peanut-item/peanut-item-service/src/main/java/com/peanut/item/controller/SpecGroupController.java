@@ -2,6 +2,7 @@ package com.peanut.item.controller;
 
 import com.peanut.item.entity.SpecGroup;
 import com.peanut.item.entity.SpecParam;
+import com.peanut.item.service.IBrandService;
 import com.peanut.item.service.ISpecGroupService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class SpecGroupController {
 
     @Autowired
     private ISpecGroupService specGroupService;
+
+    @Autowired
+    private IBrandService brandService;
 
     @ApiOperation(value = "根据分类id查询分组信息")
     @GetMapping("groups/{cid}")
@@ -55,5 +59,12 @@ public class SpecGroupController {
         List<SpecParam> list = specGroupService.queryGroupParams(gid);
         return ResponseEntity.ok(list);
     }
+
+//    @ApiOperation(value = "根据分类查询品牌")
+//    @GetMapping("params/queryBrand")
+//    public ResponseEntity<List<Brand>> queryBrand(@RequestParam("cid")Long cid) {
+//        List<Brand> list = brandService.queryBrandByCategoryId(cid);
+//        return ResponseEntity.ok(list);
+//    }
 
 }
