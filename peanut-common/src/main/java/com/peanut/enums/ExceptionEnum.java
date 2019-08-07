@@ -21,6 +21,14 @@ public enum ExceptionEnum {
     SPEC_PARAM_NOT_FOUND(404, "未找到商品规格参数"),
 
     GOODS_NOT_FOUND(404, "未找到商品"),
+
+    ADD_GOODS_FAILD(404, "新增商品失败"),
+
+    SPU_DETAIL_NOT_FOUND(404, "未找到商品详情"),
+
+    GOODS_SKU_NOT_FOUND(404, "未找到商品SKU"),
+
+    GOODS_STOCK_NOT_FOUND(404, "未找到商品库存"),
     ;
     private int code;
 

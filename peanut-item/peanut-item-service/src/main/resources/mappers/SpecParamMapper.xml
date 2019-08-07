@@ -15,4 +15,21 @@
     <result column="searching" property="searching" jdbcType="BIT" />
     <result column="segments" property="segments" jdbcType="VARCHAR" />
   </resultMap>
+
+  <select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+    select * from tb_spec_param
+    <where>
+      <trim prefixOverrides="AND">
+        <if test="cid != null">
+          AND cid = #{cid}
+        </if>
+        <if test="groupId != null">
+          AND group_id = #{groupId}
+        </if>
+        <if test="searching != null">
+          AND searching = #{searching}
+        </if>
+      </trim>
+    </where>
+  </select>
 </mapper>

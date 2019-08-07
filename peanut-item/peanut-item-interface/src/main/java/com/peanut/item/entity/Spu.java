@@ -1,6 +1,7 @@
 package com.peanut.item.entity;
 
 import java.util.Date;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "tb_spu")
@@ -49,6 +50,28 @@ public class Spu {
      */
     @Transient
     private String brandName;
+
+    @Transient
+    private List<Sku> skus;
+
+    @Transient
+    private SpuDetail spuDetail;
+
+    public List<Sku> getSkus() {
+        return skus;
+    }
+
+    public void setSkus(List<Sku> skus) {
+        this.skus = skus;
+    }
+
+    public SpuDetail getSpuDetail() {
+        return spuDetail;
+    }
+
+    public void setSpuDetail(SpuDetail spuDetail) {
+        this.spuDetail = spuDetail;
+    }
 
     public String getCategoryName() {
         return categoryName;

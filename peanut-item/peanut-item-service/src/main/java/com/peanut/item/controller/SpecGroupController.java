@@ -53,18 +53,14 @@ public class SpecGroupController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @ApiOperation(value = "查询分组参数")
+    @ApiOperation(value = "查询规格参数")
     @GetMapping("params")
-    public ResponseEntity<List<SpecParam>> queryGroupParams(@RequestParam("gid")Long gid) {
-        List<SpecParam> list = specGroupService.queryGroupParams(gid);
+    public ResponseEntity<List<SpecParam>> queryGroupParams(@RequestParam(value = "gid",required = false)Long gid,
+                                                            @RequestParam(value = "cid",required = false)Long cid,
+                                                            @RequestParam(value = "searching",required = false)Boolean searching) {
+        List<SpecParam> list = specGroupService.queryGroupParams(gid, cid, searching);
         return ResponseEntity.ok(list);
     }
 
-//    @ApiOperation(value = "根据分类查询品牌")
-//    @GetMapping("params/queryBrand")
-//    public ResponseEntity<List<Brand>> queryBrand(@RequestParam("cid")Long cid) {
-//        List<Brand> list = brandService.queryBrandByCategoryId(cid);
-//        return ResponseEntity.ok(list);
-//    }
 
 }
