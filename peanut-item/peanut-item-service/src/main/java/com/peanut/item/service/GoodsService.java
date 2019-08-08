@@ -80,25 +80,10 @@ public class GoodsService implements IGoodsService {
             detail.setSpuId(spu.getId());
             spuDetailMapper.insert(detail);
 
-            List<Sku> skuList = spu.getSkus();
-            List<Stock> stockList = new ArrayList<>();
-            for (Sku sku : skuList) {
-                sku.setCreateTime(new Date());
-                sku.setLastUpdateTime(new Date());
-                sku.setSpuId(spu.getId());
-                skuMapper.insert(sku);
-
-                Stock stock = new Stock();
-                stock.setSkuId(sku.getId());
-                stock.setStock(sku.getStock());
-                stockList.add(stock);
-            }
-            stockMapper.insertList(stockList);
-
+            this.batchAddSkuAndStock(spu);
         } catch (Exception e) {
             throw new PeanutException(ExceptionEnum.ADD_GOODS_FAILD);
         }
-
     }
 
     @Override
@@ -126,6 +111,42 @@ public class GoodsService implements IGoodsService {
         Map<Long, Integer> map = stockList.stream().collect(Collectors.toMap(Stock::getSkuId, Stock::getStock));
         skuList.forEach(s -> s.setStock(map.get(s.getId())));
         return skuList;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateGoods(Spu spu) {
+        Sku sku = new Sku();
+        sku.setSpuId(spu.getId());
+        List<Sku> skuList = skuMapper.select(sku);
+        List<Long> skuIds = skuList.stream().map(Sku::getId).collect(Collectors.toList());
+        stockMapper.deleteByIdList(skuIds);
+        skuMapper.deleteByIdList(skuIds);
+
+        batchAddSkuAndStock(spu);
+        spu.setCreateTime(null);
+        spu.setLastUpdateTime(new Date());
+        spu.setSaleable(null);
+        spu.setValid(null);
+        spuDetailMapper.updateByPrimaryKeySelective(spu.getSpuDetail());
+        spuMapper.updateByPrimaryKeySelective(spu);
+    }
+
+    private void batchAddSkuAndStock(Spu spu) {
+        List<Sku> skuList = spu.getSkus();
+        List<Stock> stockList = new ArrayList<>();
+        for (Sku s : skuList) {
+            s.setSpuId(spu.getId());
+            s.setCreateTime(new Date());
+            s.setLastUpdateTime(new Date());
+            skuMapper.insert(s);
+
+            Stock stock = new Stock();
+            stock.setSkuId(s.getId());
+            stock.setStock(s.getStock());
+            stockList.add(stock);
+        }
+        stockMapper.insertList(stockList);
     }
 
     private void loadCategoryAndBrandName(List<Spu> spuList) {

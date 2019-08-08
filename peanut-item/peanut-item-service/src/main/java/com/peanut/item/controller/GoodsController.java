@@ -49,4 +49,11 @@ public class GoodsController {
     public ResponseEntity<List<Sku>> querySkuList(@RequestParam("id")Long id) {
         return ResponseEntity.ok(goodsService.querySkuList(id));
     }
+
+    @ApiOperation(value = "修改商品")
+    @PutMapping("goods")
+    public ResponseEntity updateGoods(@RequestBody Spu spu) {
+        goodsService.updateGoods(spu);
+        return ResponseEntity.noContent().build();
+    }
 }

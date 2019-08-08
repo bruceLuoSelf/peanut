@@ -16,4 +16,6 @@ public interface IGoodsService {
     SpuDetail queryDetailById(Long id);
 
     List<Sku> querySkuList(Long id);
+
+    void updateGoods(Spu spu);
 }
