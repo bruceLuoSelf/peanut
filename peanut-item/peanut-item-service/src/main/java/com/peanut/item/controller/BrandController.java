@@ -50,11 +50,15 @@ public class BrandController {
     }
 
     @GetMapping("cid/{cid}")
-    @ApiOperation(value = "根据id查询品牌")
+    @ApiOperation(value = "根据分类id查询品牌")
     public ResponseEntity<List<Brand>> queryBrandByCategoryId(@PathVariable("cid")Long cid) {
         return ResponseEntity.ok(brandService.queryBrandByCategoryId(cid));
     }
 
-
+    @GetMapping("{id}")
+    @ApiOperation(value = "根据品牌id查询品牌")
+    public ResponseEntity<Brand> queryBrandById(@PathVariable("id")Long id) {
+        return ResponseEntity.ok(brandService.queryBrandById(id));
+    }
 
 }

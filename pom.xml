@@ -13,6 +13,7 @@
         <module>peanut-item</module>
         <module>peanut-common</module>
         <module>peanut-upload</module>
+        <module>peanut-search</module>
     </modules>
     <packaging>pom</packaging>
 

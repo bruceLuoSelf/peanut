@@ -38,13 +38,13 @@ public class GoodsController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @ApiOperation(value = "查询商品")
+    @ApiOperation(value = "查询商品明细")
     @GetMapping("spu/detail/{id}")
     public ResponseEntity<SpuDetail> queryGoodsDetail(@PathVariable("id")Long id) {
         return ResponseEntity.ok(goodsService.queryDetailById(id));
     }
 
-    @ApiOperation(value = "查询商品")
+    @ApiOperation(value = "查询商品列表")
     @GetMapping("sku/list")
     public ResponseEntity<List<Sku>> querySkuList(@RequestParam("id")Long id) {
         return ResponseEntity.ok(goodsService.querySkuList(id));

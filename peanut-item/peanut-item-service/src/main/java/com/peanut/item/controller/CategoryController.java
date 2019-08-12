@@ -41,4 +41,11 @@ public class CategoryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @ApiOperation(value = "根据id查询商品分类")
+    @GetMapping("list/ids")
+    public ResponseEntity<List<Category>> queryCategoryListByIds(@RequestParam("ids")List<Long> ids) {
+        return ResponseEntity.ok(categoryService.queryCategoryListByIds(ids));
+    }
+
+
 }

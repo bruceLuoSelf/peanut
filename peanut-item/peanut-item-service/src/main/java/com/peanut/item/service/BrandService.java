@@ -129,7 +129,11 @@ public class BrandService implements IBrandService {
 
     @Override
     public Brand queryBrandById(Long id) {
-        return brandMapper.selectByPrimaryKey(id);
+        Brand brand = brandMapper.selectByPrimaryKey(id);
+        if (brand == null) {
+            throw new PeanutException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brand;
     }
 
     @Override
