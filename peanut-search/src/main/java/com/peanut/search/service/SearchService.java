@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  * @date 2019/8/12.
  */
 @Service
-public class GoodsService {
+public class SearchService {
 
     @Autowired
     private CategoryClient categoryClient;
