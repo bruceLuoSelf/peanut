@@ -10,10 +10,18 @@ import com.peanut.search.client.CategoryClient;
 import com.peanut.search.client.GoodsClient;
 import com.peanut.search.client.SpecificationClient;
 import com.peanut.search.pojo.Goods;
+import com.peanut.search.pojo.SearchRequest;
+import com.peanut.search.repository.GoodsRepository;
+import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -24,7 +32,7 @@ import java.util.stream.Collectors;
  * @date 2019/8/12.
  */
 @Service
-public class SearchService {
+public class SearchService implements ISearchService{
 
     @Autowired
     private CategoryClient categoryClient;
@@ -38,6 +46,10 @@ public class SearchService {
     @Autowired
     private SpecificationClient specClient;
 
+    @Autowired
+    private GoodsRepository goodsrepository;
+
+    @Override
     public Goods buildGoods(Spu spu) {
         List<Category> categoryList = categoryClient.queryCategoryListByIds(Arrays.asList(spu.getCid1(), spu.getCid2(), spu.getCid3()));
         if (CollectionUtils.isEmpty(categoryList)) {
@@ -155,5 +167,30 @@ public class SearchService {
             }
         }
         return result;
+    }
+
+    @Override
+    public PageResult<Goods> search(SearchRequest request) {
+        // es搜索从0页开始
+        Integer page = request.getPage() - 1;
+        Integer size = SearchRequest.getDefaultRows();
+        // 查询构建起
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        // 结果过滤
+        queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
+        // 分页
+        queryBuilder.withPageable(PageRequest.of(page, size));
+        // 过滤
+        queryBuilder.withQuery(QueryBuilders.matchQuery("all", request.getKey()));
+        // 查询
+        Page<Goods> result = goodsrepository.search(queryBuilder.build());
+        long total = result.getTotalElements();
+        int totalPage = result.getTotalPages();
+        List<Goods> goodsList = result.getContent();
+        PageResult<Goods> pageResult = new PageResult<>();
+        pageResult.setItems(goodsList);
+        pageResult.setTotlePage(totalPage);
+        pageResult.setPage(total);
+        return pageResult;
     }
 }

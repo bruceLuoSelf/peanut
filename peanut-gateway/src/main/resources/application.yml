@@ -19,6 +19,10 @@ zuul:
       path: /upload/**
       serviceId: upload-service
       strip-prefix: false
+    search-service:
+      path: /search/**
+      serviceId: search-service
+      strip-prefix: false
 hystrix:
   command:
     default:
