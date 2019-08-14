@@ -189,7 +189,7 @@ public class SearchService implements ISearchService{
         List<Goods> goodsList = result.getContent();
         PageResult<Goods> pageResult = new PageResult<>();
         pageResult.setItems(goodsList);
-        pageResult.setTotlePage(totalPage);
+        pageResult.setTotalPage(totalPage);
         pageResult.setPage(total);
         return pageResult;
     }

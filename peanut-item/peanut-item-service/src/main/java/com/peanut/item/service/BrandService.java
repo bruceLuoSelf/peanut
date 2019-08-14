@@ -49,7 +49,7 @@ public class BrandService implements IBrandService {
         PageResult<Brand> result = new PageResult<Brand>();
         PageInfo<Brand> pageInfo = new PageInfo<Brand>(brandList);
         result.setItems(brandList);
-        result.setTotlePage(pageInfo.getPages());
+        result.setTotalPage(pageInfo.getPages());
         result.setPage(pageInfo.getTotal());
         return result;
     }

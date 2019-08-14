@@ -10,7 +10,7 @@ public class PageResult<T> {
 
     private Long page;
 
-    private Integer totlePage;
+    private Integer totalPage;
 
     private List<T> items;
 
@@ -22,12 +22,12 @@ public class PageResult<T> {
         this.page = page;
     }
 
-    public Integer getTotlePage() {
-        return totlePage;
+    public Integer getTotalPage() {
+        return totalPage;
     }
 
-    public void setTotlePage(Integer totlePage) {
-        this.totlePage = totlePage;
+    public void setTotalPage(Integer totalPage) {
+        this.totalPage = totalPage;
     }
 
     public List<T> getItems() {

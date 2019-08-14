@@ -60,7 +60,7 @@ public class GoodsService implements IGoodsService {
         loadCategoryAndBrandName(spuList);
         PageInfo<Spu> info = new PageInfo<Spu>(spuList);
         PageResult<Spu> pageResult = new PageResult<Spu>();
-        pageResult.setTotlePage(info.getPages());
+        pageResult.setTotalPage(info.getPages());
         pageResult.setItems(spuList);
         pageResult.setPage(info.getTotal());
         return pageResult;
