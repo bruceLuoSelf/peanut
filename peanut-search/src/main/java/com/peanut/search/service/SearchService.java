@@ -11,15 +11,20 @@ import com.peanut.search.client.GoodsClient;
 import com.peanut.search.client.SpecificationClient;
 import com.peanut.search.pojo.Goods;
 import com.peanut.search.pojo.SearchRequest;
+import com.peanut.search.pojo.SearchResult;
 import com.peanut.search.repository.GoodsRepository;
 import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -48,6 +53,9 @@ public class SearchService implements ISearchService{
 
     @Autowired
     private GoodsRepository goodsrepository;
+
+    @Autowired
+    ElasticsearchTemplate template;
 
     @Override
     public Goods buildGoods(Spu spu) {
@@ -178,19 +186,48 @@ public class SearchService implements ISearchService{
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         // 结果过滤
         queryBuilder.withSourceFilter(new FetchSourceFilter(new String[]{"id", "subTitle", "skus"}, null));
+        // 聚合分类
+        String categoryAggName = "category_agg";
+        queryBuilder.addAggregation(AggregationBuilders.terms(categoryAggName).field("cid3"));
+        // 聚合品牌
+        String brandAggName = "brand_agg";
+        queryBuilder.addAggregation(AggregationBuilders.terms(brandAggName).field("brandId"));
         // 分页
         queryBuilder.withPageable(PageRequest.of(page, size));
         // 过滤
+        if (StringUtils.isBlank(request.getKey())) {
+            request.setKey(null);
+        }
         queryBuilder.withQuery(QueryBuilders.matchQuery("all", request.getKey()));
         // 查询
-        Page<Goods> result = goodsrepository.search(queryBuilder.build());
+        AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
         long total = result.getTotalElements();
         int totalPage = result.getTotalPages();
         List<Goods> goodsList = result.getContent();
-        PageResult<Goods> pageResult = new PageResult<>();
-        pageResult.setItems(goodsList);
-        pageResult.setTotalPage(totalPage);
-        pageResult.setPage(total);
-        return pageResult;
+        // 解析聚合结果
+        Aggregations aggs = result.getAggregations();
+        List<Category> categories = parseCategoryAgg(aggs.get(categoryAggName));
+        List<Brand> brands = parseBrandAgg(aggs.get(brandAggName));
+        return new SearchResult(total, totalPage, goodsList, categories, brands);
+    }
+
+    private List<Category> parseCategoryAgg(LongTerms terms) {
+        try{
+            List<Long> ids = terms.getBuckets().stream().map(c -> c.getKeyAsNumber().longValue()).collect(Collectors.toList());
+            List<Category> categories = categoryClient.queryCategoryListByIds(ids);
+            return categories;
+        }catch (Exception e) {
+            return null;
+        }
+    }
+
+    private List<Brand> parseBrandAgg(LongTerms terms) {
+        try{
+            List<Long> ids = terms.getBuckets().stream().map(b -> b.getKeyAsNumber().longValue()).collect(Collectors.toList());
+            List<Brand> brands = brandClient.queryBrandByIds(ids);
+            return brands;
+        }catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -145,4 +145,13 @@ public class BrandService implements IBrandService {
         return brands;
     }
 
+    @Override
+    public List<Brand> queryBrandByIds(List<Long> ids) {
+        List<Brand> brands = brandMapper.selectByIdList(ids);
+        if (CollectionUtils.isEmpty(brands)) {
+            throw new PeanutException(ExceptionEnum.BRAND_NOT_FOUND);
+        }
+        return brands;
+    }
+
 }

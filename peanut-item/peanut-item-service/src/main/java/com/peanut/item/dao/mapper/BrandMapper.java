@@ -3,15 +3,15 @@ package com.peanut.item.dao.mapper;
 import com.peanut.item.entity.Brand;
 import com.peanut.item.entity.BrandCategory;
 import com.peanut.item.entity.Category;
+import com.peanut.mapper.MyMapper;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface BrandMapper extends Mapper<Brand> {
+public interface BrandMapper extends MyMapper<Brand> {
 
     /**
      * 新增分类品牌

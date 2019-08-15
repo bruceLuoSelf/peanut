@@ -61,4 +61,10 @@ public class BrandController {
         return ResponseEntity.ok(brandService.queryBrandById(id));
     }
 
+    @GetMapping("list")
+    @ApiOperation(value = "根据品牌id集合查询品牌列表")
+    public ResponseEntity<List<Brand>> queryBrandByIds(@RequestParam("ids")List<Long> ids) {
+        return ResponseEntity.ok(brandService.queryBrandByIds(ids));
+    }
+
 }
