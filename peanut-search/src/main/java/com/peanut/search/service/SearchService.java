@@ -17,10 +17,13 @@ import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
+import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -198,7 +201,8 @@ public class SearchService implements ISearchService{
         if (StringUtils.isBlank(request.getKey())) {
             request.setKey(null);
         }
-        queryBuilder.withQuery(QueryBuilders.matchQuery("all", request.getKey()));
+        QueryBuilder basicQuery = this.buildBasicQuery(request);
+        queryBuilder.withQuery(basicQuery);
         // 查询
         AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
         long total = result.getTotalElements();
@@ -206,9 +210,60 @@ public class SearchService implements ISearchService{
         List<Goods> goodsList = result.getContent();
         // 解析聚合结果
         Aggregations aggs = result.getAggregations();
-        List<Category> categories = parseCategoryAgg(aggs.get(categoryAggName));
+        List<Category> categories = this.parseCategoryAgg(aggs.get(categoryAggName));
         List<Brand> brands = parseBrandAgg(aggs.get(brandAggName));
-        return new SearchResult(total, totalPage, goodsList, categories, brands);
+
+        // 完成规格参数聚合
+        List<Map<String, Object>> specs = null;
+        if (CollectionUtils.isNotEmpty(categories) && categories.size() == 1) {
+            //商品分类存在并且数量为1，可以聚合规格参数
+            specs = this.buildSpecificationAgg(categories.get(0).getId(), basicQuery);
+        }
+        return new SearchResult(total, totalPage, goodsList, categories, brands, specs);
+    }
+
+    private QueryBuilder buildBasicQuery(SearchRequest request) {
+        // 创建布尔查询
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+        // 查询条件
+        queryBuilder.must(QueryBuilders.matchQuery("all", request.getKey()));
+        // 过滤条件
+        Map<String, String> map = request.getFilter();
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            String key = entry.getKey();
+            // 处理key
+            if (!"cid3".equals(key) && !"brandId".equals(key)) {
+                key = "specs." + key + ".keyword";
+            }
+            queryBuilder.filter(QueryBuilders.termQuery(key, entry.getValue()));
+        }
+        return queryBuilder;
+    }
+
+    private List<Map<String, Object>> buildSpecificationAgg(Long id, QueryBuilder basicQuery) {
+        List<Map<String, Object>> specs = new ArrayList<>();
+        // 查询需要进行聚合的规格参数
+        List<SpecParam> specParams = specClient.queryGroupParams(null, id, true);
+        // 聚合
+        NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
+        queryBuilder.withQuery(basicQuery);
+        for (SpecParam specParam : specParams) {
+            String name = specParam.getName();
+            queryBuilder.addAggregation(AggregationBuilders.terms(name).field("specs." + name + ".keyword"));
+        }
+        //获取，解析结果
+        AggregatedPage<Goods> result = template.queryForPage(queryBuilder.build(), Goods.class);
+        Aggregations aggs = result.getAggregations();
+        for (SpecParam specParam : specParams) {
+            String name = specParam.getName();
+            StringTerms terms = aggs.get(name);
+            List<String> options = terms.getBuckets().stream().map(b -> b.getKeyAsString()).collect(Collectors.toList());
+            Map<String, Object> map = new HashMap<>();
+            map.put("k", name);
+            map.put("options", options);
+            specs.add(map);
+        }
+        return specs;
     }
 
     private List<Category> parseCategoryAgg(LongTerms terms) {

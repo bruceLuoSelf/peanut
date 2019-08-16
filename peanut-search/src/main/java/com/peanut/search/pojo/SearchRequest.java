@@ -1,5 +1,7 @@
 package com.peanut.search.pojo;
 
+import java.util.Map;
+
 /**
  * @author ljn
  * @date 2019/8/13.
@@ -17,6 +19,16 @@ public class SearchRequest {
      * 搜索字段
      */
     private String key;
+
+    private Map<String, String> filter;
+
+    public Map<String, String> getFilter() {
+        return filter;
+    }
+
+    public void setFilter(Map<String, String> filter) {
+        this.filter = filter;
+    }
 
     public Integer getPage() {
         if (page == null) {
