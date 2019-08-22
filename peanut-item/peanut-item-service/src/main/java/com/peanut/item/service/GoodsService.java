@@ -132,6 +132,22 @@ public class GoodsService implements IGoodsService {
         spuMapper.updateByPrimaryKeySelective(spu);
     }
 
+    @Override
+    public Spu querySpuById(Long id) {
+        // 查询spu
+        Spu spu = spuMapper.selectByPrimaryKey(id);
+        if (spu == null) {
+            throw new PeanutException(ExceptionEnum.GOODS_NOT_FOUND);
+        }
+        // 查询sku
+        List<Sku> skus = this.querySkuList(id);
+        spu.setSkus(skus);
+        // 查询detail
+        SpuDetail spuDetail = this.queryDetailById(id);
+        spu.setSpuDetail(spuDetail);
+        return spu;
+    }
+
     private void batchAddSkuAndStock(Spu spu) {
         List<Sku> skuList = spu.getSkus();
         List<Stock> stockList = new ArrayList<>();

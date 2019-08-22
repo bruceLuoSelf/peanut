@@ -1,9 +1,7 @@
 package com.peanut.item.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Table(name = "tb_spec_group")
 public class SpecGroup {
@@ -23,6 +21,17 @@ public class SpecGroup {
      * 规格组的名称
      */
     private String name;
+
+    @Transient
+    private List<SpecParam> params;
+
+    public List<SpecParam> getParams() {
+        return params;
+    }
+
+    public void setParams(List<SpecParam> params) {
+        this.params = params;
+    }
 
     /**
      * 获取主键

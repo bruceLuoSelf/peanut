@@ -32,4 +32,8 @@ public interface GoodsApi {
             @RequestParam(value="rows", defaultValue = "5") Integer rows,
             @RequestParam(value="saleable", required = false) Boolean saleable,
             @RequestParam(value="key", required = false) String key);
+
+    @ApiOperation(value = "根据spu的id查询spu")
+    @GetMapping("spu/{id}")
+    Spu querySpuById(@PathVariable("id") Long id);
 }

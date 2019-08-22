@@ -21,4 +21,6 @@ public interface ISpecGroupService {
     void updateSpecGroup(SpecGroup specGroup);
 
     List<SpecParam> queryGroupParams(Long gid, Long cid, Boolean searching);
+
+    List<SpecGroup> queryGroupsByCid(Long cid);
 }

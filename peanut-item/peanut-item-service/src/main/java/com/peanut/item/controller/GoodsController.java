@@ -56,4 +56,10 @@ public class GoodsController {
         goodsService.updateGoods(spu);
         return ResponseEntity.noContent().build();
     }
+
+    @ApiOperation(value = "根据spu的id查询spu")
+    @GetMapping("spu/{id}")
+    public ResponseEntity<Spu> querySpuById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(goodsService.querySpuById(id));
+    }
 }

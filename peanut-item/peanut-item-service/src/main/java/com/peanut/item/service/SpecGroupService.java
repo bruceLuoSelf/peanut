@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,5 +69,23 @@ public class SpecGroupService implements ISpecGroupService {
             throw new PeanutException(ExceptionEnum.SPEC_PARAM_NOT_FOUND);
         }
         return list;
+    }
+
+    @Override
+    public List<SpecGroup> queryGroupsByCid(Long cid) {
+        // 查询规格组
+        List<SpecGroup> specGroups = this.queryGroupByCid(cid);
+        List<SpecParam> specParams = this.queryGroupParams(null, cid, true);
+        Map<Long, List<SpecParam>> map = new HashMap<>();
+        for (SpecParam specParam : specParams) {
+            if (!map.containsKey(specParam.getGroupId())) {
+                map.put(specParam.getGroupId(), new ArrayList<SpecParam>());
+            }
+            map.get(specParam.getGroupId()).add(specParam);
+        }
+        for (SpecGroup specGroup : specGroups) {
+            specGroup.setParams(map.get(specGroup.getId()));
+        }
+        return specGroups;
     }
 }

@@ -1,5 +1,6 @@
 package com.peanut.item.api;
 
+import com.peanut.item.entity.SpecGroup;
 import com.peanut.item.entity.SpecParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,4 +19,8 @@ public interface SpecificationApi {
     List<SpecParam> queryGroupParams(@RequestParam(value = "gid",required = false)Long gid,
                                                             @RequestParam(value = "cid",required = false)Long cid,
                                                             @RequestParam(value = "searching",required = false)Boolean searching);
+
+    @ApiOperation("查询规格组")
+    @GetMapping("spec/group")
+    List<SpecGroup> queryGroupsByCid(@RequestParam("id")Long cid);
 }
