@@ -22,9 +22,10 @@ public class PageController {
     @GetMapping("item/{id}.html")
     public String toItemPage(@PathVariable("id") Long spuId, Model model) {
         // 准备模型数据
-        Map<String, Object> model1 = pageService.loadModel(spuId);
+        Map<String, Object> attributes = pageService.loadModel(spuId);
+        model.addAllAttributes(attributes);
+        pageService.createHtml(spuId);
         //返回视图
-
         return "item";
     }
 

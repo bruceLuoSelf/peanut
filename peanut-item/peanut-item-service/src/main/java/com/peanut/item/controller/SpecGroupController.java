@@ -63,7 +63,7 @@ public class SpecGroupController {
     }
 
     @ApiOperation("查询规格组")
-    @GetMapping("spec/group")
+    @GetMapping("group")
     public ResponseEntity<List<SpecGroup>> queryGroupsByCid(@RequestParam("id")Long cid){
         return ResponseEntity.ok(specGroupService.queryGroupsByCid(cid));
     }

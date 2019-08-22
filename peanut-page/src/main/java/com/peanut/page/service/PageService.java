@@ -5,9 +5,16 @@ import com.peanut.page.client.BrandClient;
 import com.peanut.page.client.CategoryClient;
 import com.peanut.page.client.GoodsClient;
 import com.peanut.page.client.SpecificationClient;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +25,7 @@ import java.util.Map;
  * @date 2019/8/21.
  */
 @Service
+@Slf4j
 public class PageService {
     @Autowired
     GoodsClient goodsClient;
@@ -30,6 +38,12 @@ public class PageService {
 
     @Autowired
     CategoryClient categoryClient;
+
+    @Autowired
+    TemplateEngine templateEngine;
+
+    @Value("${peanut.page.destPath}")
+    private  String destPath;
 
     public Map<String, Object> loadModel(Long spuId) {
         Spu spu = goodsClient.querySpuById(spuId);
@@ -48,5 +62,22 @@ public class PageService {
         model.put("categories", categories);
         model.put("specs", specParams);
         return model;
+    }
+
+    @Async
+    public void createHtml(Long spuId) {
+        // 上下文
+        Context context = new Context();
+        context.setVariables(loadModel(spuId));
+        // 输出流
+        File file = new File(destPath, spuId + ".html");
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(file, "UTF-8");
+            templateEngine.process("item", context, writer);
+        } catch (Exception e) {
+            log.info("[静态页服务] 生成静态页发生异常：" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
