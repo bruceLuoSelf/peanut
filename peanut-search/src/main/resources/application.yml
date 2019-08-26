@@ -10,6 +10,11 @@ spring:
   jackson:
 #    返回前台时不显示为空的字段
     default-property-inclusion: non_null
+  rabbitmq:
+    host: 120.78.170.24
+    username: bruce
+    password: 103021
+    virtual-host: /peanut
 eureka:
   client:
     service-url:

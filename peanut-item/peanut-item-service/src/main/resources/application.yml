@@ -8,6 +8,26 @@ spring:
     username: root
     password: root
     driver-class-name : com.mysql.jdbc.Driver
+  rabbitmq:
+    host: 120.78.170.24
+    username: bruce
+    password: 103021
+    virtual-host: /peanut
+    template:
+      retry:
+        # 重试
+        enabled: true
+        # 重试周期
+        initial-interval: 10000ms
+        # 最大的重试周期
+        max-attempts: 30000
+        # 失败后，重试周期倍数
+        multiplier: 2
+        # 默认的交换机
+      exchange: peanut.item.exchange
+    publisher-confirms: true
+
+
 
 eureka:
   client:

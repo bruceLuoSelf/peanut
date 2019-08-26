@@ -12,6 +12,7 @@ import com.peanut.item.entity.*;
 import com.peanut.vo.PageResult;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,9 @@ public class GoodsService implements IGoodsService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    AmqpTemplate amqpTemplate;
 
     @Override
     public PageResult<Spu> queryGoods(Integer page, Integer rows, Boolean saleable, String key) {
@@ -81,6 +85,9 @@ public class GoodsService implements IGoodsService {
             spuDetailMapper.insert(detail);
 
             this.batchAddSkuAndStock(spu);
+
+            // 发送mq消息
+            amqpTemplate.convertAndSend("item.insert", spu.getId());
         } catch (Exception e) {
             throw new PeanutException(ExceptionEnum.ADD_GOODS_FAILD);
         }
@@ -130,6 +137,9 @@ public class GoodsService implements IGoodsService {
         spu.setValid(null);
         spuDetailMapper.updateByPrimaryKeySelective(spu.getSpuDetail());
         spuMapper.updateByPrimaryKeySelective(spu);
+
+        // 发送mq消息
+        amqpTemplate.convertAndSend("item.update", spu.getId());
     }
 
     @Override

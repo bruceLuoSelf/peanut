@@ -15,4 +15,8 @@ public interface ISearchService {
     Goods buildGoods(Spu spu);
 
     PageResult<Goods> search(SearchRequest request);
+
+    void createOrUpdateIndex(Long spuId);
+
+    void deleteIndex(Long spuId);
 }

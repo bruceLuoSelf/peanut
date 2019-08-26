@@ -55,7 +55,7 @@ public class SearchService implements ISearchService{
     private SpecificationClient specClient;
 
     @Autowired
-    private GoodsRepository goodsrepository;
+    private GoodsRepository goodsRepository;
 
     @Autowired
     ElasticsearchTemplate template;
@@ -220,6 +220,20 @@ public class SearchService implements ISearchService{
             specs = this.buildSpecificationAgg(categories.get(0).getId(), basicQuery);
         }
         return new SearchResult(total, totalPage, goodsList, categories, brands, specs);
+    }
+
+    @Override
+    public void createOrUpdateIndex(Long spuId) {
+        Spu spu = goodsClient.querySpuById(spuId);
+        // 构建goods对象
+        Goods goods = buildGoods(spu);
+        // 存入索引库
+        goodsRepository.save(goods);
+    }
+
+    @Override
+    public void deleteIndex(Long spuId) {
+        goodsRepository.deleteById(spuId);
     }
 
     private QueryBuilder buildBasicQuery(SearchRequest request) {
