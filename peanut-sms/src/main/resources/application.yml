@@ -9,7 +9,9 @@ spring:
     password: 103021
     virtual-host: /peanut
 
-accessKey: LTAIKDi14OaHLa1f
-accessSecret: Dm6F3gSYN6cYDAgaW3DDRpoaTgSSMq
-signName: peanutRegist
-templateCode: SMS_158050235
+peanut:
+  sms:
+    accessKey: LTAIKDi14OaHLa1f
+    accessSecret: Dm6F3gSYN6cYDAgaW3DDRpoaTgSSMq
+    signName: 真空妙有
+    templateCode: SMS_158050235
