@@ -15,6 +15,7 @@
         <module>peanut-upload</module>
         <module>peanut-search</module>
         <module>peanut-page</module>
+        <module>peanut-sms</module>
     </modules>
     <packaging>pom</packaging>
 

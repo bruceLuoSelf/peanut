@@ -1,0 +1,15 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: sms-service
+  rabbitmq:
+    host: 120.78.170.24
+    username: bruce
+    password: 103021
+    virtual-host: /peanut
+
+accessKey: LTAIKDi14OaHLa1f
+accessSecret: Dm6F3gSYN6cYDAgaW3DDRpoaTgSSMq
+signName: peanutRegist
+templateCode: SMS_158050235
