@@ -8,7 +8,12 @@ spring:
     username: bruce
     password: 103021
     virtual-host: /peanut
-
+  redis.database : 0
+  redis.host : 120.78.170.24
+  redis.port : 6379
+  redis.password : 103021
+  redis.pool.max-total : 8
+  redis.pool.timeout : 10000
 peanut:
   sms:
     accessKey: LTAIKDi14OaHLa1f

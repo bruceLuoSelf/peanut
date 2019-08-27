@@ -29,6 +29,8 @@ public enum ExceptionEnum {
     GOODS_SKU_NOT_FOUND(404, "未找到商品SKU"),
 
     GOODS_STOCK_NOT_FOUND(404, "未找到商品库存"),
+
+    SMS_TIMES_LIMIT(404, "一分钟之内只能发送一次短信验证码"),
     ;
     private int code;
 

@@ -2,6 +2,7 @@ package com.peanut.sms.mq;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -20,6 +21,9 @@ public class SmsListenerTest {
     @Autowired
     private SmsListener smsListener;
 
+    @Autowired
+    AmqpTemplate template;
+
     @Test
     public void listenSms() {
         Map<String,String> msg = new HashMap<>();
@@ -30,7 +34,10 @@ public class SmsListenerTest {
 
     @Test
     public void test() {
-        System.out.println("test");
+        Map<String, String> msg = new HashMap<>();
+        msg.put("code", "992233");
+        msg.put("phone", "18827065959");
+        template.convertAndSend("peanut.sms.exchange", "sms.verify.code", msg);
     }
 
 }
