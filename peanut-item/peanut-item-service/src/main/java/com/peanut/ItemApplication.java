@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableSwagger2
-@MapperScan("com.peanut.item.dao.mapper")
+@MapperScan("com.peanut.user.dao.mapper")
 @EnableTransactionManagement
 public class ItemApplication {
 

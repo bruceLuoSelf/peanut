@@ -1,0 +1,53 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://120.78.170.24:3306/peanut?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: root
+    driver-class-name : com.mysql.jdbc.Driver
+  redis:
+    database: 0
+    host: 120.78.170.24
+    port: 6379
+    password: 103021
+    pool.max-total: 8
+    pool.timeout: 10000
+  rabbitmq:
+    host: 120.78.170.24
+    username: bruce
+    password: 103021
+    virtual-host: /peanut
+    template:
+      retry:
+        # 重试
+        enabled: true
+        # 重试周期
+        initial-interval: 10000ms
+        # 最大的重试周期
+        max-attempts: 30000
+        # 失败后，重试周期倍数
+        multiplier: 2
+        # 默认的交换机
+      exchange: peanut.user.exchange
+    publisher-confirms: true
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  # 显示ip地址  不写就显示主机名称
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+
+#logging.level.com.peanut.item.dao.mapper : DEBUG
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations : classpath:mappers/*.xml
