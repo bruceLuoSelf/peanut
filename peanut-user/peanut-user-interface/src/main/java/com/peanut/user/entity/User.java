@@ -30,14 +30,16 @@ public class User {
      * @JsonIgnore 接口不再返回这个字段
      */
     @JsonIgnore
+    @NotEmpty(message = "密码不能为空")
     @Length(min=4,max = 32,message="密码长度必须在4~32位")
     private String password;
 
     /**
      * 注册手机号
      */
-    @Pattern(regexp = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$",
+    @Pattern(regexp = "^1[3456789]\\d{9}$",
             message = "手机号格式不正确")
+    @NotEmpty(message = "手机号不能为空")
     private String phone;
 
     /**

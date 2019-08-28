@@ -56,6 +56,10 @@ public class UserService {
         return userMapper.selectCount(user) == 0;
     }
 
+    /**
+     * 发送短信
+     * @param phone
+     */
     public void sendCode(String phone) {
         // 生成验证码
         String code =NumberUtils.generateCode(6);
@@ -68,20 +72,49 @@ public class UserService {
         redisTemplate.opsForValue().set(verify_code_key + phone, code, 1L, TimeUnit.MINUTES);
     }
 
+    /**
+     * 注册账号
+     * @param user
+     * @param code
+     */
     public void register(User user, String code) {
+        // 校验验证码
         String verifyCode = redisTemplate.opsForValue().get(verify_code_key + user.getPhone());
         if (!code.equals(verifyCode)) {
             throw new PeanutException(ExceptionEnum.VERIFY_CODE_ERROR);
         }
         User newUser = new User();
         newUser.setUsername(user.getUsername());
+        // 判断该用户名是否已注册
         if (userMapper.selectCount(newUser) > 0) {
             throw new PeanutException(ExceptionEnum.USER_ALREADY_EXIST);
         }
+        // 加盐
         String salt = CodeUtils.generateSalt();
         user.setSalt(salt);
         user.setPassword(CodeUtils.md5Hex(user.getPassword(), salt));
         user.setCreated(new Date());
         userMapper.insert(user);
+    }
+
+    /**
+     * 根据用户名和密码查询用户
+     * @param username
+     * @param password
+     * @return
+     */
+    public User queryUserByUsernameAndPassword(String username, String password) {
+        User user = new User();
+        user.setUsername(username);
+        user = userMapper.selectOne(user);
+        if (user == null) {
+            throw new PeanutException(ExceptionEnum.USER_NOT_ALREADY_EXIST);
+        }
+        String salt = user.getSalt();
+        String pwd = CodeUtils.md5Hex(password, salt);
+        if (!pwd.equals(user.getPassword())) {
+            throw new PeanutException(ExceptionEnum.PASSWORD_ERROR);
+        }
+        return user;
     }
 }

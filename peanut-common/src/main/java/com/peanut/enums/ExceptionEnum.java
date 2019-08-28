@@ -34,7 +34,11 @@ public enum ExceptionEnum {
 
     USER_ALREADY_EXIST(400, "该用户名已存在"),
 
+    USER_NOT_ALREADY_EXIST(400, "用户名不存在"),
+
     VERIFY_CODE_ERROR(400, "验证码错误"),
+
+    PASSWORD_ERROR(400, "密码错误"),
     ;
     private int code;
 
