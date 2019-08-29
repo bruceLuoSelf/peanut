@@ -42,7 +42,7 @@ public class UserController {
             throw new RuntimeException(result.getFieldErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.joining("|")));
         }
         userService.register(user, code);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @ApiOperation("根据用户名和密码查询用户")
