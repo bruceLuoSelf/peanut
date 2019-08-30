@@ -12,5 +12,18 @@
     <groupId>com.peanut.auth</groupId>
     <artifactId>com-peanut-common</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>
