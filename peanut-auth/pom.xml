@@ -13,7 +13,7 @@
     <artifactId>peanut-auth</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>com-peanut-common</module>
+        <module>peanut-auth-common</module>
         <module>peanut-auth-service</module>
     </modules>
 
