@@ -18,6 +18,7 @@
         <module>peanut-sms</module>
         <module>peanut-user</module>
         <module>peanut-auth</module>
+        <module>peanut-cart</module>
     </modules>
     <packaging>pom</packaging>
 
