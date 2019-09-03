@@ -19,6 +19,7 @@
         <module>peanut-user</module>
         <module>peanut-auth</module>
         <module>peanut-cart</module>
+        <module>peanut-order</module>
     </modules>
     <packaging>pom</packaging>
 
