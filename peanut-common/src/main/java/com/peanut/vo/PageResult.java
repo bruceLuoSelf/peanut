@@ -44,6 +44,11 @@ public class PageResult<T> {
         this.items = items;
     }
 
+    public PageResult(Long page, List<T> items) {
+        this.page = page;
+        this.items = items;
+    }
+
     public PageResult() {
     }
 }

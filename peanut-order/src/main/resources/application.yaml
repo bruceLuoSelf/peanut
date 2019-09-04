@@ -5,7 +5,7 @@ spring:
   application:
     name: order-service
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/leyou?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    url: jdbc:mysql://120.78.170.24:3306/peanut?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&allowMultiQueries=true
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver
@@ -16,20 +16,22 @@ spring:
       max-wait: 1000
       test-on-borrow: true
   rabbitmq:
-    host: 192.168.56.101
-    username: leyou
-    password: leyou
-    virtual-host: /leyou
+    host: 120.78.170.24
+    username: bruce
+    password: 103021
+    virtual-host: /peanut
     template:
       retry:
         enabled: true
         initial-interval: 10000ms
         max-interval: 300000ms
         multiplier: 2
-      exchange: leyou.item.exchange
+      exchange: peanut.item.exchange
     publisher-confirms: true
   redis:
-    host: 192.168.56.101
+    host: 120.78.170.24
+    port: 6379
+    password: 103021
 eureka:
   client:
     service-url:
@@ -42,14 +44,14 @@ eureka:
     lease-expiration-duration-in-seconds: 10
 
 mybatis:
-  type-aliases-package: com.leyou.item.pojo
-  mapper-locations: mapper/OrderMapper.xml
+  type-aliases-package: com.peanut.item.pojo
+  mapper-locations: mappers/OrderMapper.xml
   configuration:
     map-underscore-to-camel-case: true
 mapper:
   not-empty: false
   identity: mysql
-leyou:
+peanut:
   worker:
     workerId: 1
     datacenterId: 1
@@ -62,3 +64,4 @@ leyou:
     key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
     connectTimeoutMs: 5000
     readTimeoutMs: 10000
+

@@ -2,6 +2,8 @@ package com.peanut.auth.config;
 
 import com.peanut.common.utils.RsaUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.annotation.PostConstruct;
@@ -16,6 +18,8 @@ import java.security.PublicKey;
 @Slf4j
 @ConfigurationProperties(prefix = "peanut.jwt")
 public class JwtProperties {
+
+    private static Logger log = LoggerFactory.getLogger(JwtProperties.class);
 
     /**
      * 密钥

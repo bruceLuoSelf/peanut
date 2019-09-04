@@ -34,7 +34,6 @@ public class JwtTest {
     public void tessstRsa() throws Exception {
         File file = new File("C:\\tmp\\rsa");
         file.mkdir();
-
     }
 
     @Before
@@ -52,7 +51,7 @@ public class JwtTest {
 
     @Test
     public void testParseToken() throws Exception {
-        String token = "eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjAsInVzZXJuYW1lIjoiamFjayIsImV4cCI6MTU2NzE0Mzg1MH0.SbNyP5Gj3gXyn6iVahMytHOuyJn8BFmHygUlHWDx6mN3MkMujfJpg-tbdToN15eO2nnnHOtvNmAuJJSOyLM0GRRNSCvIKCfc_E33VpzvI_RrVzz7IoQZNzOzV1uz8Ts1KaQzIRZdI63NYsZlYeKXZjvZ-4FWLYzArxAeq5ZSFcc";
+        String token = "eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjAsInVzZXJuYW1lIjoiamFjayIsImV4cCI6MTU2NzYwNDkwM30.U8wxFDy0zeUgBDDfsMv9ldd63XVA_1pgngffxjFIYrSHECMpWLOHDqw76ZE0jLGE6QblzOdpDaQ7L3F8PgK4Vk425xLUPdfTJbiJGn3BbWyrNe-5oKezMw7oGMVO_s0dY5_9F65uEuc9JRufM8nvAP_FSchP2AmtfDCnSxajbaU";
 
         // 解析token
         UserInfo user = JwtUtils.getInfoFromToken(token, publicKey);

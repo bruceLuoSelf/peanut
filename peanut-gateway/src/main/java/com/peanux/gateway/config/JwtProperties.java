@@ -2,6 +2,8 @@ package com.peanux.gateway.config;
 
 import com.peanut.common.utils.RsaUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,8 @@ import java.security.PublicKey;
 @Slf4j
 @Component
 public class JwtProperties {
+
+    private static Logger log = LoggerFactory.getLogger(JwtProperties.class);
 
     /**
      * 公钥路径
