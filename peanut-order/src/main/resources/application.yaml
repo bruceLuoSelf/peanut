@@ -57,7 +57,7 @@ peanut:
     datacenterId: 1
   jwt:
     pubKeyPath: C:\\tmp\\rsa\\rsa.pub # 公钥地址
-    cookieName: LY_TOKEN # cookie的名称
+    cookieName: PEANUT_TOKEN # cookie的名称
   pay:
     appId: wx8397f8696b538317
     mchId: 1473426802
