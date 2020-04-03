@@ -16,7 +16,7 @@ spring:
   redis.pool.timeout : 10000
 peanut:
   sms:
-    accessKey: LTAIKDi14OaHLa1f
-    accessSecret: Dm6F3gSYN6cYDAgaW3DDRpoaTgSSMq
+    accessKey:
+    accessSecret:
     signName: 真空妙有
     templateCode: SMS_158050235
